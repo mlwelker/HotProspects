@@ -21,10 +21,11 @@ struct ContentView: View {
         
         let result = await fetchTask.result
         
-        do {
-            output = try result.get()
-        } catch {
-            print("download error")
+        switch result {
+        case .success(let str):
+            output = str
+        case .failure(let error):
+            output = "Download error: \(error.localizedDescription)"
         }
     }
 }
