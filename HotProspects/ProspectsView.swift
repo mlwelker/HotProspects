@@ -18,9 +18,6 @@ struct ProspectsView: View {
             List {
                 ForEach(filteredProspects) { prospect in
                     HStack {
-                        Image(systemName: "person.crop.circle.fill.badge.checkmark")
-                            .foregroundStyle(prospect.isContacted ? .green : .clear)
-                        
                         VStack(alignment: .leading) {
                             Text(prospect.name)
                                 .font(.headline)
