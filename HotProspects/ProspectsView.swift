@@ -17,35 +17,40 @@ struct ProspectsView: View {
         NavigationView {
             List {
                 ForEach(filteredProspects) { prospect in
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundStyle(.secondary)
-                    }
-                    .swipeActions {
-                        if prospect.isContacted {
-                            Button {
-                                prospects.toggle(prospect)
-                            } label: {
-                                Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
-                            }
-                            .tint(.blue)
-                        } else {
-                            Button {
-                                prospects.toggle(prospect)
-                            } label: {
-                                Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
-                            }
-                            .tint(.green)
-                            
-                            Button {
-                                addNotification(for: prospect)
-                            } label: {
-                                Label("Remind Me", systemImage: "bell")
-                            }
-                            .tint(.orange)
+                    HStack {
+                        Image(systemName: "person.crop.circle.fill.badge.checkmark")
+                            .foregroundStyle(prospect.isContacted ? .green : .clear)
+                        
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundStyle(.secondary)
                         }
+                        .swipeActions {
+                            if prospect.isContacted {
+                                Button {
+                                    prospects.toggle(prospect)
+                                } label: {
+                                    Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
+                                }
+                                .tint(.blue)
+                            } else {
+                                Button {
+                                    prospects.toggle(prospect)
+                                } label: {
+                                    Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
+                                }
+                                .tint(.green)
+                                
+                                Button {
+                                    addNotification(for: prospect)
+                                } label: {
+                                    Label("Remind Me", systemImage: "bell")
+                                }
+                                .tint(.orange)
+                            }
+                    }
                     }
                 }
             }
