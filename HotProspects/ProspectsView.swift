@@ -24,30 +24,34 @@ struct ProspectsView: View {
                             Text(prospect.emailAddress)
                                 .foregroundStyle(.secondary)
                         }
-                        .swipeActions {
-                            if prospect.isContacted {
-                                Button {
-                                    prospects.toggle(prospect)
-                                } label: {
-                                    Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
-                                }
-                                .tint(.blue)
-                            } else {
-                                Button {
-                                    prospects.toggle(prospect)
-                                } label: {
-                                    Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
-                                }
-                                .tint(.green)
-                                
-                                Button {
-                                    addNotification(for: prospect)
-                                } label: {
-                                    Label("Remind Me", systemImage: "bell")
-                                }
-                                .tint(.orange)
-                            }
+                        
+                        if filter == .none && prospect.isContacted {
+                            Image(systemName: "checkmark.circle.fill")
+                        }
                     }
+                    .swipeActions {
+                        if prospect.isContacted {
+                            Button {
+                                prospects.toggle(prospect)
+                            } label: {
+                                Label("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark")
+                            }
+                            .tint(.blue)
+                        } else {
+                            Button {
+                                prospects.toggle(prospect)
+                            } label: {
+                                Label("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark")
+                            }
+                            .tint(.green)
+                            
+                            Button {
+                                addNotification(for: prospect)
+                            } label: {
+                                Label("Remind Me", systemImage: "bell")
+                            }
+                            .tint(.orange)
+                        }
                     }
                 }
             }
@@ -117,7 +121,7 @@ struct ProspectsView: View {
             
             var dateComponents = DateComponents()
             dateComponents.hour = 9
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
