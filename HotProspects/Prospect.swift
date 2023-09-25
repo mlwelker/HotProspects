@@ -10,7 +10,6 @@ class Prospect: Identifiable, Codable {
 
 @MainActor class Prospects: ObservableObject {
     @Published private(set) var people: [Prospect]
-    let saveKey = "SavedData"
     
     let savePath = FileManager.documentsDirectory.appendingPathComponent("Prospects")
     
@@ -26,7 +25,7 @@ class Prospect: Identifiable, Codable {
     
     private func save() {
         if let encoded = try? JSONEncoder().encode(people) {
-            try? encoded.write(to: savePath)
+            try? encoded.write(to: savePath, options: [.atomic, .completeFileProtection])
         }
     }
     
